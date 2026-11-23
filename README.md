@@ -10,15 +10,12 @@ Seller models are generated from Whatnot's current OpenAPI definition.
 
 ## Install
 
-The initial implementation is available on the `feat/initial-sdk` branch while it is reviewed:
-
 ```sh
-npm install github:packsnaphq/whatnot-sdk#feat/initial-sdk
+npm install @packsnap/whatnot-sdk
 ```
 
-For production, replace the branch name with a reviewed full commit SHA. Git installs build the package using
-its `prepare` script; TypeScript is not required by applications consuming the built package.
-The package name is `@packsnap/whatnot-sdk`. It has not been published to npm yet.
+Merging to `main` runs verification, publishes the package version to npm and creates a GitHub release.
+TypeScript is not required by applications consuming the built package.
 
 Requires Node.js 22.12 or newer. ESM imports and Node's synchronous `require()` of ESM are supported.
 The library uses Fetch/Web Crypto APIs and does not depend on NestJS, a database or a particular web framework.

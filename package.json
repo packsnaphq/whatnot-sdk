@@ -1,6 +1,6 @@
 {
     "name": "@packsnap/whatnot-sdk",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "Community TypeScript SDK for the Whatnot Seller API, maintained by PackSnap",
     "type": "module",
     "main": "./dist/index.js",
@@ -60,6 +60,7 @@
         "globals": "^17.14.0",
         "openapi-typescript": "^7.13.0",
         "prettier": "^3.10.1",
+        "semver": "^7.8.6",
         "tsx": "^4.23.15",
         "typescript": "^5.9.3",
         "typescript-eslint": "^8.73.0"

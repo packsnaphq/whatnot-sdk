@@ -1,0 +1,46 @@
+name: Release
+on:
+    push:
+        branches: [main]
+    workflow_dispatch:
+permissions:
+    contents: read
+concurrency:
+    group: npm-release
+    queue: max
+    cancel-in-progress: false
+jobs:
+    verify:
+        if: github.ref == 'refs/heads/main'
+        uses: ./.github/workflows/ci.yml
+    publish:
+        needs: verify
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+            id-token: write
+        steps:
+            - uses: actions/checkout@v7
+            - uses: actions/setup-node@v7
+              with:
+                  node-version: 24
+                  cache: npm
+                  registry-url: https://registry.npmjs.org
+            - run: npm ci
+            - name: Pack release
+              id: package
+              run: |
+                  echo "version=$(node -p 'require("./package.json").version')" >> "$GITHUB_OUTPUT"
+                  npm pack --pack-destination "$RUNNER_TEMP"
+                  echo "tarball=$RUNNER_TEMP/$(node -p 'const p = require("./package.json"); p.name.replace("@", "").replace("/", "-") + "-" + p.version + ".tgz"')" >> "$GITHUB_OUTPUT"
+            - name: Publish to npm
+              run: npm publish "$TARBALL" --access public --provenance
+              env:
+                  TARBALL: ${{ steps.package.outputs.tarball }}
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
+            - name: Create GitHub release
+              run: gh release create "v$VERSION" "$TARBALL" --target "$GITHUB_SHA" --title "v$VERSION" --generate-notes
+              env:
+                  VERSION: ${{ steps.package.outputs.version }}
+                  TARBALL: ${{ steps.package.outputs.tarball }}
+                  GH_TOKEN: ${{ github.token }}

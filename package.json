@@ -1,6 +1,6 @@
 {
     "name": "@packsnap/whatnot-sdk",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "Community TypeScript SDK for the Whatnot Seller API, maintained by PackSnap",
     "type": "module",
     "main": "./dist/index.js",

@@ -31,8 +31,8 @@ can be added as separate contributions. Keep framework adapters and application 
 
 ## Releases
 
-`main` is protected. Hof (`@hofcoral`) owns review and merging; CI must pass before merging.
-Hof can merge his own pull requests using the configured review exception. Force pushes and branch deletion are blocked.
+`main` is protected. Designated maintainers manage reviews and merges, and CI must pass before merging.
+Force pushes and branch deletion are blocked.
 
 Every merge to `main` publishes the version in `package.json` to npm and creates a matching `v<version>` GitHub release
 with generated release notes and the published package tarball. There is no separate release pull request.
